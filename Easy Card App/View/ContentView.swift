@@ -9,19 +9,28 @@ import SwiftUI
 
 struct ContentView: View {
     @State var gridType: Bool = true
+    @State private var isShow = false
     var body: some View {
-        NavigationStack{
-            TabView {
-                VStack{
-                    HeaderView(gridType: $gridType)
-                    MarketScreen(gridType: $gridType)
-                    Spacer()
-                }
-                .padding(.horizontal, 12)
-                .tabItem {
-                    Image(systemName: "plus.app.fill")
+        NavigationStack {
+            VStack {
+                HeaderView(gridType: $gridType)
+                MarketScreen(gridType: $gridType)
+                Spacer()
+            }
+            .padding(.horizontal, 12)
+            .toolbar {
+                ToolbarItem(placement: .bottomBar) {                        Button(action: {
+                        isShow = true
+                    }) {
+                        Image(systemName: "plus.app.fill")
+                            .font(.title)
+                            .foregroundStyle(Color(.black).opacity(0.7))
+                    }.fullScreenCover(isPresented: $isShow) {
+                        AddProductView()
+                    }
                 }
             }
+
         }
     }
 }
