@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var gridType: Bool = true
+
     var body: some View {
         NavigationStack{
             TabView {
@@ -25,6 +26,8 @@ struct ContentView: View {
         }
     }
 }
+
 #Preview {
     ContentView()
+        .environmentObject(BookmarkManager())
 }

@@ -1,0 +1,51 @@
+//
+//  SavedView.swift
+//  Easy Card App
+//
+//  Created by Mac on 25/9/25.
+//
+
+import SwiftUI
+
+struct SavedView: View {
+    @EnvironmentObject var bookmarkManager: BookmarkManager
+    
+    private let columns = [
+            GridItem(.flexible(), spacing: 16),
+            GridItem(.flexible(), spacing: 16)
+        ]
+    
+    var body: some View {
+        GeometryReader { geo in
+            ScrollView {
+                if bookmarkManager.savedItems.isEmpty {
+                    VStack(spacing: 16) {
+                        Image(systemName: "bookmark.slash")
+                            .font(.system(size: 50))
+                            .foregroundStyle(.gray)
+                        Text("No saved items yet")
+                            .foregroundStyle(.gray)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.top, 150)
+                } else {
+                    LazyVGrid(columns: columns, spacing: 16) {
+                        ForEach(bookmarkManager.savedItems, id: \.self) { item in
+                            if let id = Int(item) {
+                                CardVerticle(geo: geo, itemID: id)
+//                                    .frame(height: 270)
+                                    .frame(height: geo.size.height * 0.43)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 5)
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+        .environmentObject(BookmarkManager())
+}
