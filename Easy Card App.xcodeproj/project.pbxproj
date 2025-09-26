@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		188CD9D42E86FCC300C2F131 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 188CD9D32E86FCC300C2F131 /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		180A0CC52E7DA369009FB2DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188CD9D42E86FCC300C2F131 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = "Easy Card App";
 			packageProductDependencies = (
+				188CD9D32E86FCC300C2F131 /* Alamofire */,
 			);
 			productName = "Easy Card App";
 			productReference = 180A0CB72E7DA367009FB2DC /* Easy Card App.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 180A0CAE2E7DA367009FB2DC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 180A0CB82E7DA367009FB2DC /* Products */;
 			projectDirPath = "";
@@ -582,6 +591,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		188CD9D32E86FCC300C2F131 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 180A0CAF2E7DA367009FB2DC /* Project object */;
 }

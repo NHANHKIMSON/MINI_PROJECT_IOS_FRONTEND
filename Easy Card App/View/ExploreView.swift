@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import Combine
 struct ExploreView: View {
+    @ObservedObject var viewModel = CategoryViewModel()
     let oneColumn = [
         GridItem(.flexible()),
     ]
@@ -19,14 +21,10 @@ struct ExploreView: View {
         GeometryReader{ geo in
             ScrollView{
                 VStack(spacing: 16){
-                    LazyVGrid(columns: columns){
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
-                        CategoryCard(geo: geo)
+                        LazyVGrid(columns: columns){
+                            ForEach(viewModel.categories, id: \.id) { category in
+                            CategoryCard(geo: geo, name: category.name, icon: category.icon)
+                        }
                     }
                     
                     HStack{
@@ -57,6 +55,7 @@ struct ExploreView: View {
                         }
                     }
                 }
+                .onAppear(perform: viewModel.fetchPosts)
             }
             .scrollIndicators(.hidden)
         }
@@ -70,14 +69,16 @@ struct ExploreView: View {
 
 struct CategoryCard: View {
     @State var geo: GeometryProxy
+    @State var name: String
+    @State var icon: String
     var body: some View {
         Button(action: {}, label: {
             HStack{
-                Image("car")
+                Image(icon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30)
-                Text("Automobile")
+                Text(name)
                     .lineLimit(1)
             }
             .padding()
