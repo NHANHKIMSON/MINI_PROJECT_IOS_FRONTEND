@@ -8,7 +8,7 @@
 import SwiftUI
 struct MarketScreen: View {
     @Binding var gridType: Bool
-    @State var selectedTab: Int = 0
+    @State var selectedTab: Int = 1
     var body: some View {
         // Tab Screen
         TabViews(tabs: [

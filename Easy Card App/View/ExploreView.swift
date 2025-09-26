@@ -18,32 +18,73 @@ struct ExploreView: View {
     var body: some View {
         GeometryReader{ geo in
             ScrollView{
-                if signleColumn{
-                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
+                VStack(spacing: 16){
+                    LazyVGrid(columns: columns){
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
+                        CategoryCard(geo: geo)
                     }
-                }else{
-                    LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
+                    
+                    HStack{
+                        Text("Top Item")
+                        Spacer()
+                    }
+                    Group{
+                        if signleColumn{
+                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                                CardVerticle(geo: geo)
+                            }
+                        }else{
+                            LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
+                                Card(geo: geo)
+                                Card(geo: geo)
+                                Card(geo: geo)
+                                Card(geo: geo)
+                                Card(geo: geo)
+                            }
+                        }
                     }
                 }
             }
+            .scrollIndicators(.hidden)
         }
     }
 }
 
 #Preview {
     ContentView()
+}
+
+
+struct CategoryCard: View {
+    @State var geo: GeometryProxy
+    var body: some View {
+        Button(action: {}, label: {
+            HStack{
+                Image("car")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30)
+                Text("Automobile")
+                    .lineLimit(1)
+            }
+            .padding()
+            .frame(width: geo.size.width * 0.48)
+            .background(.white)
+            .cornerRadius(10)
+        })
+        .buttonStyle(CustomButtonStyle())
+    }
 }
