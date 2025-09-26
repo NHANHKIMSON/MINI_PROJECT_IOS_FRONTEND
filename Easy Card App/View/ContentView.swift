@@ -17,7 +17,6 @@ struct ContentView: View {
                 MarketScreen(gridType: $gridType)
                 Spacer()
             }
-            .padding(.horizontal, 12)
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {                        Button(action: {
                         isShow = true

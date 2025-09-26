@@ -18,16 +18,23 @@ struct MarketScreen: View {
         ], geoWidth: 375, selectedTab: $selectedTab)
         
         // Tab Content Screen
-            switch selectedTab{
-            case 0:
-                ForYouView(signleColumn: $gridType)
-            case 1:
-                Text("Explore")
-            case 2:
-                Text("Saved")
-            default:
-                Text("Defaul")
+        
+        ZStack{
+            Color("DP50")
+            Group{
+                switch selectedTab{
+                case 0:
+                    ForYouView(signleColumn: $gridType)
+                case 1:
+                    ExploreView(signleColumn: $gridType)
+                case 2:
+                    Text("Saved")
+                default:
+                    Text("Defaul")
+                }
             }
+            .padding(12)
+        }
     }
 }
 
@@ -73,6 +80,7 @@ struct ForYouView: View {
                     }
                 }
             }
+            .scrollIndicators(.hidden)
         }
     }
 }
