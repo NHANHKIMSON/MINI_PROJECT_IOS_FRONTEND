@@ -14,6 +14,7 @@ struct ContentView: View {
         NavigationStack {
             VStack {
                 HeaderView(gridType: $gridType)
+                    .padding(.horizontal, 12)
                 MarketScreen(gridType: $gridType)
                 Spacer()
             }  
