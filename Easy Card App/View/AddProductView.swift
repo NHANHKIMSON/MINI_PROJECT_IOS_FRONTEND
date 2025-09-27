@@ -213,7 +213,15 @@ struct AddProductView: View {
                     .cornerRadius(20)
                     
                     Button{
-                        //
+                        print("image", selectedImages)
+                        print("categories",category)
+                        print("title", title)
+                        print("price", price)
+                        print("condition", condition)
+                        print("brand", brand)
+                        print("model", model)
+                        print("year", year)
+                        print("color", color)
                     }label: {
                         Text("Post")
                             .frame(maxWidth: .infinity)
