@@ -60,15 +60,41 @@ struct ForYouView: View {
             ScrollView{
                 if signleColumn{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
+                        NavigationLink(destination: ItemDetailView()) {
+                            CardVerticle(geo: geo)
+                        }
+
                     }
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
@@ -98,9 +124,14 @@ struct Card: View {
                     Text("Apple Watch Ultra Generation")
                         .lineLimit(1)
                         .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.black)
                     Spacer()
                     HStack{
                         Text("$1,400.00")
+                            .font(.subheadline)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.black)
                         Spacer()
                         Button(action: {
                             bookmark = bookmark == false ? true : false
@@ -135,9 +166,14 @@ struct CardVerticle: View {
                 Text("Apple Watch Ultra Generation")
                     .lineLimit(1)
                     .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.black)
                 Spacer()
                 HStack{
                     Text("$1,400.00")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundStyle(.black)
                     Spacer()
                     Button(action: {
                         bookmark = bookmark == false ? true : false

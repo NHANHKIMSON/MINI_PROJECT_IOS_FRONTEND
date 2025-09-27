@@ -8,21 +8,23 @@
 
 import SwiftUI
 
-struct ProductDetailView: View {
+struct ItemDetailView: View {
     @State private var product = Product.mockProduct
     @State private var isProductInfoExpanded = true
     @State private var selectedImageIndex = 0
     @State private var isSaving = false
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
             Color(white: 0.97).ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Header
                 HStack {
-                    Button(action: {}) {
-                        Image(systemName: "chevron.left")
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "arrow.left")
                             .font(.system(size: 16, weight: .medium))
                             .foregroundColor(.black)
                             .frame(width: 32, height: 32)
@@ -40,7 +42,6 @@ struct ProductDetailView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 
-                // Scrollable Content
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 20) {
                         
@@ -221,5 +222,5 @@ struct ProductInfoRow: View {
 }
 
 #Preview {
-    ProductDetailView()
+    ItemDetailView()
 }

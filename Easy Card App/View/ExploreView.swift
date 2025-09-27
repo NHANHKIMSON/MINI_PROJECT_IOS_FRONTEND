@@ -28,21 +28,48 @@ struct ExploreView: View {
                     }
                     
                     HStack{
-                        Text("Top Item")
+                        Text("Top Items")
+                            .font(.headline)
                         Spacer()
                     }
                     Group{
                         if signleColumn{
                             LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+                                
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+                                NavigationLink(destination: ItemDetailView()) {
+                                    CardVerticle(geo: geo)
+                                }
+
+
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
@@ -72,7 +99,9 @@ struct CategoryCard: View {
     @State var name: String
     @State var icon: String
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {
+        
+        }, label: {
             HStack{
                 Image(icon)
                     .resizable()
