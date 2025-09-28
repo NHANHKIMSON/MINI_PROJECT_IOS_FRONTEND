@@ -8,7 +8,7 @@
 import SwiftUI
 struct MarketScreen: View {
     @Binding var gridType: Bool
-    @State var selectedTab: Int = 1
+    @State var selectedTab: Int = 0
     var body: some View {
         // Tab Screen
         TabViews(tabs: [
@@ -45,45 +45,6 @@ struct MarketScreen: View {
     ContentView()
 }
 
-
-struct ForYouView: View {
-    let oneColumn = [
-        GridItem(.flexible()),
-    ]
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-    ]
-    @Binding var signleColumn: Bool
-    var body: some View {
-        GeometryReader{ geo in
-            ScrollView{
-                if signleColumn{
-                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                    }
-                }else{
-                    LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                    }
-                }
-            }
-            .scrollIndicators(.hidden)
-        }
-    }
-}
     
     
 struct Card: View {
@@ -125,19 +86,19 @@ struct Card: View {
 struct CardVerticle: View {
     @State var geo: GeometryProxy
     @State var bookmark: Bool = false
+    @State var name: String
+    @State var image: String?
+    @State var price: String?
     var body: some View {
         VStack{
-            Image("iwatch")
-                .resizable()
-                .scaledToFill()
-                .frame(height: geo.size.width * 0.5)
+            CustomAsynImage(image: image)
             VStack(alignment: .leading){
-                Text("Apple Watch Ultra Generation")
+                Text(name)
                     .lineLimit(1)
                     .font(.subheadline)
                 Spacer()
                 HStack{
-                    Text("$1,400.00")
+                    Text("\(price) $" ?? "0.00 $")
                     Spacer()
                     Button(action: {
                         bookmark = bookmark == false ? true : false

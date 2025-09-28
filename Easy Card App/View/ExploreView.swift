@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 struct ExploreView: View {
     @ObservedObject var viewModel = CategoryViewModel()
+    @ObservedObject var productViewModel = ProductViewModel()
     let oneColumn = [
         GridItem(.flexible()),
     ]
@@ -34,15 +35,9 @@ struct ExploreView: View {
                     Group{
                         if signleColumn{
                             LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
+                                ForEach(productViewModel.products, id: \.id){ pro in
+                                    CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                                }
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
@@ -54,6 +49,7 @@ struct ExploreView: View {
                             }
                         }
                     }
+                    .onAppear(perform: productViewModel.fetchPosts)
                 }
                 .onAppear(perform: viewModel.fetchPosts)
             }
@@ -64,28 +60,4 @@ struct ExploreView: View {
 
 #Preview {
     ContentView()
-}
-
-
-struct CategoryCard: View {
-    @State var geo: GeometryProxy
-    @State var name: String
-    @State var icon: String
-    var body: some View {
-        Button(action: {}, label: {
-            HStack{
-                Image(icon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
-                Text(name)
-                    .lineLimit(1)
-            }
-            .padding()
-            .frame(width: geo.size.width * 0.48)
-            .background(.white)
-            .cornerRadius(10)
-        })
-        .buttonStyle(CustomButtonStyle())
-    }
 }
