@@ -27,7 +27,7 @@ struct MarketScreen: View {
                 Text("Explore")
             case 2:
 //                Text("Saved")
-                SavedView()
+                SavedView(signleColumn: $gridType)
             default:
                 Text("Defaul")
             }
