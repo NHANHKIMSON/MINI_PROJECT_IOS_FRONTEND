@@ -91,14 +91,22 @@ struct CardVerticle: View {
     @State var price: String?
     var body: some View {
         VStack{
-            CustomAsynImage(image: image)
+            AsyncImage(url: URL(string: image ?? "")) { phase in
+                if let loadedImage = phase.image {
+                    loadedImage
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: .infinity, height: geo.size.width * 0.3)
+                        .clipped()
+                }
+            }
             VStack(alignment: .leading){
                 Text(name)
                     .lineLimit(1)
                     .font(.subheadline)
                 Spacer()
                 HStack{
-                    Text("\(price) $" ?? "0.00 $")
+                    Text("\(price) $")
                     Spacer()
                     Button(action: {
                         bookmark = bookmark == false ? true : false

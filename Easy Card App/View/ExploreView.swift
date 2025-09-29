@@ -49,9 +49,9 @@ struct ExploreView: View {
                             }
                         }
                     }
-                    .onAppear(perform: productViewModel.fetchPosts)
+                    .onAppear(perform: productViewModel.getAllProduct)
                 }
-                .onAppear(perform: viewModel.fetchPosts)
+                .onAppear(perform: viewModel.getAllCategory)
             }
             .scrollIndicators(.hidden)
         }

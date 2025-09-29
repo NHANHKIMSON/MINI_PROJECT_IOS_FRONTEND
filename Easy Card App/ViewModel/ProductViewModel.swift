@@ -11,7 +11,7 @@ import Combine
 class ProductViewModel: ObservableObject {
     @Published var products: [Product] = []
 
-    func fetchPosts() {
+    func getAllProduct() {
         let url = "http://localhost:9090/api/v1/product"
         AF.request(url)
             .validate()

@@ -26,7 +26,7 @@ struct ForYouView: View {
                             CardVerticle(geo: geo, name: pro.name, image: pro.image)
                         }
                     }
-                    .onAppear(perform: viewModel.fetchPosts)
+                    .onAppear(perform: viewModel.getAllProduct)
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
                         Card(geo: geo)
