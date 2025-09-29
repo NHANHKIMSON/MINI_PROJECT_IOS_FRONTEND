@@ -48,6 +48,10 @@ struct SelectCategoriesView: View {
                         .cornerRadius(50)
                 }
             }
+            ToolbarItem(placement: .principal) {
+                Text("Categories")
+                    .bold()
+            }
         }
     }
 }
