@@ -12,12 +12,13 @@ struct CategoryCard: View {
     var body: some View {
         Button(action: {}, label: {
             HStack{
-                Image(icon)
+                Image(systemName: icon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30)
                 Text(name)
                     .lineLimit(1)
+                Spacer()
             }
             .padding()
             .frame(width: geo.size.width * 0.48)
@@ -26,4 +27,7 @@ struct CategoryCard: View {
         })
         .buttonStyle(CustomButtonStyle())
     }
+}
+#Preview {
+    ContentView()
 }

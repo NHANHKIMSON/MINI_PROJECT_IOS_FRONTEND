@@ -16,18 +16,13 @@ class CategoryViewModel: ObservableObject {
         
         AF.request(url)
             .validate()
-            .responseData { response in
+            .responseDecodable(of: CategoryResponse.self) { response in
                 switch response.result {
                 case .success(let data):
-                    do {
-                        let decoded = try JSONDecoder().decode(CategoryResponse.self, from: data)
-                        self.categories = decoded.payload
-                    } catch {
-                        print("Something went wrong")
-                    }
+                    self.categories = data.payload
                 case .failure(let error):
-                    print("Error")
+                    print("sss \(error)")
+                }
             }
-        }
     }
 }
