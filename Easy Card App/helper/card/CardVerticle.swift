@@ -18,7 +18,7 @@ struct CardVerticle: View {
                     loadedImage
                         .resizable()
                         .scaledToFit()
-                        .frame(height: geo.size.width * 0.35)
+                        .frame(height: geo.size.width * 0.3)
                 }
             }
             VStack(alignment: .leading){
@@ -42,10 +42,13 @@ struct CardVerticle: View {
             .background(.white)
         }
         .overlay{
-            RoundedRectangle(cornerRadius: 24)
+            RoundedRectangle(cornerRadius: 10)
                 .stroke(.gray.opacity(0.6), lineWidth: 2)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .frame(width: geo.size.height * 0.29)
     }
+}
+#Preview{
+    ContentView()
 }

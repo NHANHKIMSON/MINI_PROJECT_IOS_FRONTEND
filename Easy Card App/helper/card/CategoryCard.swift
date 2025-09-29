@@ -9,8 +9,11 @@ struct CategoryCard: View {
     @State var geo: GeometryProxy
     @State var name: String
     @State var icon: String
+    @State var isCategoryDetails: Bool = false
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {
+            isCategoryDetails = true
+        }, label: {
             HStack{
                 Image(systemName: icon)
                     .resizable()
@@ -21,11 +24,14 @@ struct CategoryCard: View {
                 Spacer()
             }
             .padding()
-            .frame(width: geo.size.width * 0.48)
+            .frame(width: geo.size.width * 0.45)
             .background(.white)
             .cornerRadius(10)
         })
         .buttonStyle(CustomButtonStyle())
+        .navigationDestination( isPresented: $isCategoryDetails){
+            CategoryDetailScreen()
+        }
     }
 }
 #Preview {

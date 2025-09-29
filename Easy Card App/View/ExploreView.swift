@@ -27,30 +27,35 @@ struct ExploreView: View {
                             CategoryCard(geo: geo, name: category.name, icon: category.icon)
                         }
                     }
+                    .padding(12)
                     
-                    HStack{
-                        Text("Top Item")
-                        Spacer()
-                    }
-                    VStack{
-                        if signleColumn{
-                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
-                                ForEach(productViewModel.products, id: \.id){ pro in
-                                    CardVerticle(geo: geo, name: pro.name, image: pro.image)
-                                }
-                            }
-                        }else{
-                            LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                ForEach(productViewModel.products, id: \.id){ pro in
-                                    NavigationLink(destination: ItemDetailView()){
-                                        Card(geo: geo, name: pro.name, image: pro.image)
+                    Group{
+                        HStack{
+                            Text("Top Item")
+                            Spacer()
+                        }
+                        .padding(.leading, 12)
+                        VStack{
+                            if signleColumn{
+                                LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
+                                    ForEach(productViewModel.products, id: \.id){ pro in
+                                        CardVerticle(geo: geo, name: pro.name, image: pro.image)
                                     }
-                                    .buttonStyle(CustomButtonStyle())
+                                }
+                            }else{
+                                LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
+                                    ForEach(productViewModel.products, id: \.id){ pro in
+                                        NavigationLink(destination: ItemDetailView()){
+                                            Card(geo: geo, name: pro.name, image: pro.image)
+                                        }
+                                        .buttonStyle(CustomButtonStyle())
+                                    }
                                 }
                             }
                         }
+                        .padding(.horizontal, 12)
+                        .onAppear(perform: productViewModel.getAllProduct)
                     }
-                    .onAppear(perform: productViewModel.getAllProduct)
                 }
                 .onAppear(perform: viewModel.getAllCategory)
             }

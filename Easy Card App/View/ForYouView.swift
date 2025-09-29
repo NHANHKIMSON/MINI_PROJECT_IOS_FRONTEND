@@ -26,13 +26,15 @@ struct ForYouView: View {
                             CardVerticle(geo: geo, isFavorite: pro.isFavorite, name: pro.name, image: pro.image)
                         }
                     }
+                    .padding(10)
                     .onAppear(perform: viewModel.getAllProduct)
                 }else{
-                    LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
+                    LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
                         ForEach(viewModel.products, id: \.id){ pro in
                             Card(geo: geo, name: pro.name, image: pro.image)
                         }
                     }
+                    .padding(.horizontal, 12)
                     .onAppear(perform: viewModel.getAllProduct)
                 }
             }

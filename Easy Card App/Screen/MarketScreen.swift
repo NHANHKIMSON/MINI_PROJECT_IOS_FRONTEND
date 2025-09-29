@@ -33,7 +33,6 @@ struct MarketScreen: View {
                     Text("Defaul")
                 }
             }
-            .padding(12)
         }
     }
 }
@@ -89,5 +88,6 @@ struct Card: View {
         }
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .frame(height: geo.size.height * 0.2)
+        .padding(.top, 12)
     }
 }
