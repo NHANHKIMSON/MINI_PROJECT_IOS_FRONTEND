@@ -29,4 +29,27 @@ class ProductViewModel: ObservableObject {
             }
         }
     }
+    func getAllProductByTitle(title: String) {
+        let url = "http://localhost:9090/api/v1/product/search?title=\(title)"
+        AF.request(url)
+            .validate()
+            .responseDecodable(of: ProductResponse.self){ response in
+                switch response.result{
+                case .success(let data):
+                    self.products = data.payload
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+        }
+    }
 }
+//AF.request(url)
+//    .validate()
+//    .responseDecodable(of: CategoryResponse.self) { response in
+//        switch response.result {
+//        case .success(let data):
+//            categories = data.payload
+//        case .failure(let error):
+//            errorMessage = error.localizedDescription
+//        }
+//    }

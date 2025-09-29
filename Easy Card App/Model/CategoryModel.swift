@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Category: Decodable, Sendable {
+struct Category: Codable {
     let id: Int
     let name: String
     let icon: String
 }
 
-struct CategoryResponse: Decodable {
+struct CategoryResponse: Codable {
     let payload: [Category]
 }
