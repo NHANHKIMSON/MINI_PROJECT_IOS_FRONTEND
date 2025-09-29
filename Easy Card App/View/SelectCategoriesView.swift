@@ -1,47 +1,52 @@
 import SwiftUI
 
 struct SelectCategoriesView: View {
-    var categories = [
-        (name: "Food & Drink", icon: "takeoutbag.and.cup.and.straw"),
-        (name: "Vehicle", icon: "car"),
-        (name: "Electronic Devices", icon: "tv.and.mediabox.fill"),
-        (name: "Properties", icon: "house.and.flag"),
-        (name: "Furniture", icon: "fan.desk"),
-        (name: "Pet", icon: "pawprint"),
-        (name: "Hobbies", icon: "guitars")
-    ]
+//    var categories = [
+//        (name: "Food & Drink", icon: "takeoutbag.and.cup.and.straw"),
+//        (name: "Vehicle", icon: "car"),
+//        (name: "Electronic Devices", icon: "tv.and.mediabox.fill"),
+//        (name: "Properties", icon: "house.and.flag"),
+//        (name: "Furniture", icon: "fan.desk"),
+//        (name: "Pet", icon: "pawprint"),
+//        (name: "Hobbies", icon: "guitars")
+//    ]
+    @ObservedObject var viewModel = CategoryViewModel()
     @Environment(\.dismiss) var dismiss
     @Binding var category: String
+    @Binding var categoryId: Int
     
     var body: some View {
         List{
-            ForEach(categories.indices, id: \.self) { index in
-                let item = categories[index]
+            ForEach(viewModel.categories, id: \.id) { category in
                 Button{
-                    category = item.name
+                    self.category = category.name
+                    categoryId = category.id
                     dismiss()
                 } label:{
                     HStack{
-                        Image(systemName: item.icon)
+                        Image(systemName: category.icon)
                             .frame(width: 30)
                             .padding(.trailing)
-                        Text(item.name)
+                        Text(category.name)
                     }
                     .font(.title3)
                     .foregroundStyle(Color.black)
-                    .padding(10)
                 }
             }
         }
+        .toolbarBackgroundVisibility(.visible, for: .navigationBar)
+        .toolbarBackground(.white, for: .navigationBar)
+        .toolbarTitleDisplayMode(.inline)
+        .onAppear(perform: viewModel.fetchPosts)
         .toolbar {
             ToolbarItem(placement: .navigation) {
                 Button{
                     dismiss()
                 }label: {
                     Image(systemName: "arrow.backward")
+                        .font(.caption)
                         .padding(8)
-                        .frame(width: 40, height: 40)
-                        .font(.title3)
+                        .frame(width: 30 , height: 30)
                         .bold()
                         .foregroundStyle(.black)
                         .background(Color.gray.opacity(0.8))
