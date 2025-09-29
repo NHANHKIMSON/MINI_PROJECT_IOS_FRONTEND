@@ -33,18 +33,23 @@ class ProductViewModel: ObservableObject {
         let url = "http://localhost:9090/api/v1/product/search?title=\(title)"
         AF.request(url)
             .validate()
-            .responseData { response in
-                switch response.result {
+            .responseDecodable(of: ProductResponse.self){ response in
+                switch response.result{
                 case .success(let data):
-                    do {
-                        let decoded = try JSONDecoder().decode(ProductResponse.self, from: data)
-                        self.products = decoded.payload
-                    } catch {
-                        print("Something went wrong")
-                    }
+                    self.products = data.payload
                 case .failure(let error):
-                    print("Error \(error)")
-            }
+                    print("Error: \(error)")
+                }
         }
     }
 }
+//AF.request(url)
+//    .validate()
+//    .responseDecodable(of: CategoryResponse.self) { response in
+//        switch response.result {
+//        case .success(let data):
+//            categories = data.payload
+//        case .failure(let error):
+//            errorMessage = error.localizedDescription
+//        }
+//    }

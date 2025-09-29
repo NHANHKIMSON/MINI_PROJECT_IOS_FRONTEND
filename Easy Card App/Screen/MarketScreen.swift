@@ -95,8 +95,8 @@ struct CardVerticle: View {
                 if let loadedImage = phase.image {
                     loadedImage
                         .resizable()
-                        .scaledToFill()
-                        .frame(maxWidth: geo.size.width * 0.2, maxHeight: geo.size.width * 0.4)
+                        .scaledToFit()
+                        .frame(height: geo.size.width * 0.35)
                 }
             }
             VStack(alignment: .leading){
@@ -105,7 +105,7 @@ struct CardVerticle: View {
                     .font(.subheadline)
                 Spacer()
                 HStack{
-                    Text("\(price) $")
+                    Text("$" + String(price ?? "0.00"))
                     Spacer()
                     Button(action: {
                         bookmark = bookmark == false ? true : false
@@ -117,6 +117,7 @@ struct CardVerticle: View {
                 .font(.subheadline)
             }
             .padding(12)
+            .background(.white)
         }
         .overlay{
             RoundedRectangle(cornerRadius: 24)

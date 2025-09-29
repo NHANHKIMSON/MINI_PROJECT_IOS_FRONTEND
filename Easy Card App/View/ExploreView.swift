@@ -22,7 +22,7 @@ struct ExploreView: View {
         GeometryReader{ geo in
             ScrollView{
                 VStack(spacing: 16){
-                        LazyVGrid(columns: columns){
+                    LazyVGrid(columns: columns, spacing: geo.size.width * 0.03){
                             ForEach(viewModel.categories, id: \.id) { category in
                             CategoryCard(geo: geo, name: category.name, icon: category.icon)
                         }
@@ -34,7 +34,7 @@ struct ExploreView: View {
                     }
                     Group{
                         if signleColumn{
-                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
+                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.04){
                                 ForEach(productViewModel.products, id: \.id){ pro in
                                     CardVerticle(geo: geo, name: pro.name, image: pro.image)
                                 }
