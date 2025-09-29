@@ -9,6 +9,7 @@ import SwiftUI
 import Combine
 struct ExploreView: View {
     @ObservedObject var viewModel = CategoryViewModel()
+    @ObservedObject var productViewModel = ProductViewModel()
     let oneColumn = [
         GridItem(.flexible()),
     ]
@@ -21,7 +22,7 @@ struct ExploreView: View {
         GeometryReader{ geo in
             ScrollView{
                 VStack(spacing: 16){
-                        LazyVGrid(columns: columns){
+                    LazyVGrid(columns: columns, spacing: geo.size.width * 0.03){
                             ForEach(viewModel.categories, id: \.id) { category in
                             CategoryCard(geo: geo, name: category.name, icon: category.icon)
                         }
@@ -33,16 +34,10 @@ struct ExploreView: View {
                     }
                     Group{
                         if signleColumn{
-                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
-                                CardVerticle(geo: geo)
+                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.04){
+                                ForEach(productViewModel.products, id: \.id){ pro in
+                                    CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                                }
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
@@ -54,8 +49,9 @@ struct ExploreView: View {
                             }
                         }
                     }
+                    .onAppear(perform: productViewModel.getAllProduct)
                 }
-                .onAppear(perform: viewModel.fetchPosts)
+                .onAppear(perform: viewModel.getAllCategory)
             }
             .scrollIndicators(.hidden)
         }
@@ -64,28 +60,4 @@ struct ExploreView: View {
 
 #Preview {
     ContentView()
-}
-
-
-struct CategoryCard: View {
-    @State var geo: GeometryProxy
-    @State var name: String
-    @State var icon: String
-    var body: some View {
-        Button(action: {}, label: {
-            HStack{
-                Image(icon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30)
-                Text(name)
-                    .lineLimit(1)
-            }
-            .padding()
-            .frame(width: geo.size.width * 0.48)
-            .background(.white)
-            .cornerRadius(10)
-        })
-        .buttonStyle(CustomButtonStyle())
-    }
 }
