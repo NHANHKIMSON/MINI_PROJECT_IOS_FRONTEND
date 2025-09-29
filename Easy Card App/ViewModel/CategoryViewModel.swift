@@ -29,5 +29,13 @@ class CategoryViewModel: ObservableObject {
                     print("Error")
             }
         }
+//        AF.request(url).validate().responseDecodable(of: [Category].self){ response in
+//            switch response.result{
+//            case .success(let data):
+//                self.categories = data
+//            case.failure(let error):
+//                print(error)
+//            }
+//        }
     }
 }

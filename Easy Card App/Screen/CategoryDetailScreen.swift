@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct CategoryDetailScreen : View {
-//    let imageUrl = ["watch", "iphone", "iphone 1", "iphone2", "iphone3", "delivery package boxes"]
+    @ObservedObject var productViewModel = ProductViewModel()
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible()),
@@ -15,13 +15,6 @@ struct CategoryDetailScreen : View {
     @Environment(\.dismiss) var dismiss
     @State private var searchText: String = ""
     @State private var isSaved: String = ""
-//    var filteredItems: [String] {
-//        if searchText.isEmpty {
-//            return imageUrl
-//        } else {
-//            return imageUrl.filter { $0.localizedCaseInsensitiveContains(searchText) }
-//        }
-//    }
     var body: some View {
         VStack{
             HStack(spacing: 20){
@@ -29,6 +22,9 @@ struct CategoryDetailScreen : View {
                     .foregroundStyle(.gray)
                     .frame(width: 20, height: 20)
                 TextField("Search", text: $searchText)
+                    .onSubmit {
+                        productViewModel.getAllProductByTitle(title: searchText)
+                    }
             }
             .padding(.vertical, 10)
             .padding(.horizontal, 20)
@@ -38,33 +34,16 @@ struct CategoryDetailScreen : View {
             GeometryReader{ geo in
                 ScrollView{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
-                        CardVerticle(geo: geo)
+                        //
+                        ForEach(productViewModel.products, id: \.id){ pro in
+                            CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                        }
                     }
+                    .onAppear(perform: productViewModel.getAllProduct
+                    )
                 }
                 .scrollIndicators(.hidden)
             }
-//            ScrollView(.vertical, showsIndicators: false) {
-//                LazyHGrid(
-//                    rows: Array(repeating: GridItem(.flexible(minimum: 250)), count: (filteredItems.count + 1) / 2),
-//                    spacing: 20
-//                ) {
-//                    ForEach(filteredItems.indices, id: \.self) { index in
-//                        CustomVerticalCard(
-//                            imageUrl: filteredItems[index],
-//                            title: "Apple Watch",
-//                            price: "$1400"
-//                        )
-//                    }
-//                }
-//            }
         }
         .padding(.top, 15)
         .padding(10)
@@ -89,6 +68,7 @@ struct CategoryDetailScreen : View {
                     .font(.headline)
             }
         }
+        
     }
 }
 

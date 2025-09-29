@@ -4,14 +4,19 @@
 //
 //  Created by Apple on 9/28/25.
 //
-struct ProductResponse: Codable {
+
+import Foundation
+struct ProductResponse: Codable, Sendable {
+    let message, status: String
     let payload: [Product]
+    let time: String
 }
 
-struct Product: Codable {
+struct Product: Codable, Sendable {
     let id: Int
     let name: String
-    let image: String?
-    let isFavorite: Bool?
-    let price: Int?        
+    let image: String
+    let isFavorite: Bool
+    let price: Double
+    let category: Category
 }

@@ -96,8 +96,7 @@ struct CardVerticle: View {
                     loadedImage
                         .resizable()
                         .scaledToFill()
-                        .frame(width: .infinity, height: geo.size.width * 0.3)
-                        .clipped()
+                        .frame(maxWidth: geo.size.width * 0.2, maxHeight: geo.size.width * 0.4)
                 }
             }
             VStack(alignment: .leading){
