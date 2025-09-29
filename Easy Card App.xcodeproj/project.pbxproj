@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		188CD9D42E86FCC300C2F131 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 188CD9D32E86FCC300C2F131 /* Alamofire */; };
+		0435A7EE2E8A268600163DF3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0435A7ED2E8A268600163DF3 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				188CD9D42E86FCC300C2F131 /* Alamofire in Frameworks */,
+				0435A7EE2E8A268600163DF3 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			);
 			name = "Easy Card App";
 			packageProductDependencies = (
-				188CD9D32E86FCC300C2F131 /* Alamofire */,
+				0435A7ED2E8A268600163DF3 /* Alamofire */,
 			);
 			productName = "Easy Card App";
 			productReference = 180A0CB72E7DA367009FB2DC /* Easy Card App.app */;
@@ -202,7 +202,7 @@
 			mainGroup = 180A0CAE2E7DA367009FB2DC;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				0435A7EC2E8A268600163DF3 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 180A0CB82E7DA367009FB2DC /* Products */;
@@ -415,7 +415,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,7 +449,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -475,7 +475,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M2X26DUJR5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ios.Easy-Card-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -497,7 +497,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M2X26DUJR5;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ios.Easy-Card-AppTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -518,6 +518,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M2X26DUJR5;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ios.Easy-Card-AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -538,6 +539,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M2X26DUJR5;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ios.Easy-Card-AppUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -593,7 +595,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		0435A7EC2E8A268600163DF3 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -604,9 +606,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		188CD9D32E86FCC300C2F131 /* Alamofire */ = {
+		0435A7ED2E8A268600163DF3 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 188CD9D22E86FCC300C2F131 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 0435A7EC2E8A268600163DF3 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
