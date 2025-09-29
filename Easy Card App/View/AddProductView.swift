@@ -322,11 +322,21 @@ struct AddProductView: View {
                                         isFavorite: false,
                                         categoryId: categoryId
                                     )
-
+                                    
+                                    condition = ""
+                                    brand = ""
+                                    model = ""
+                                    color = ""
+                                    year = ""
+                                    size = ""
+                                    type = ""
+                                    description = ""
+                                    title = ""
+                                    imageURL.removeAll()
+                                    categoryId = 0
                                 }
                             }
                         }
-                        print("success add product")
                     } label: {
                         Text("Post")
                             .frame(maxWidth: .infinity)
