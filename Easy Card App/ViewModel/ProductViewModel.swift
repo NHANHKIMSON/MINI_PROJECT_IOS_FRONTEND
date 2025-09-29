@@ -42,8 +42,39 @@ class ProductViewModel: ObservableObject {
                 }
         }
     }
-    func changeStatus(){
-        
+    func getAllProductByCategoryId(id: Int) {
+        let url = "http://localhost:9090/api/v1/product/category/1"
+        AF.request(url)
+            .validate()
+            .responseDecodable(of: ProductResponse.self){ response in
+                switch response.result{
+                case .success(let data):
+                    self.products = data.payload
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
+        }
+    }
+    func changeStatus(id: Int, isFavorite: Bool) {
+        let url = "http://localhost:9090/api/v1/product/\(id)"
+        let params: [String: Any] = [
+            "isFavorite": isFavorite
+        ]
+        AF.request(
+            url,
+            method: .patch,
+            parameters: params,
+            encoding: JSONEncoding.default
+        )
+        .validate()
+        .responseDecodable(of: ProductResponse.self) { response in
+            switch response.result {
+            case .success(let data):
+                self.products = data.payload
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
     }
 }
 //AF.request(url)
@@ -56,3 +87,4 @@ class ProductViewModel: ObservableObject {
 //            errorMessage = error.localizedDescription
 //        }
 //    }
+

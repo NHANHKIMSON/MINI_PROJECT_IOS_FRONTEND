@@ -6,8 +6,10 @@
 //
 import SwiftUI
 struct CardVerticle: View {
+    @ObservedObject var productModelView = ProductViewModel()
     @State var geo: GeometryProxy
     @State var isFavorite: Bool = false
+    @State var id: Int = 0
     @State var name: String
     @State var image: String?
     @State var price: String?
@@ -30,7 +32,10 @@ struct CardVerticle: View {
                     Text("$" + String(price ?? "0.00"))
                     Spacer()
                     Button(action: {
-                        isFavorite = isFavorite == false ? true : false
+                        isFavorite.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            productModelView.changeStatus(id: id, isFavorite: isFavorite)
+                        }
                     }, label: {
                         Image(systemName: isFavorite ?  "bookmark.fill" : "bookmark")
                             .foregroundStyle(.brown)

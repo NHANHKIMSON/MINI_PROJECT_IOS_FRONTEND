@@ -13,40 +13,44 @@ struct CategoryDetailScreen : View {
         GridItem(.flexible()),
     ]
     @Environment(\.dismiss) var dismiss
+    @State var id: Int?
     @State private var searchText: String = ""
     @State private var isSaved: String = ""
     var body: some View {
-        VStack{
-            HStack(spacing: 20){
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.gray)
-                    .frame(width: 20, height: 20)
-                TextField("Search", text: $searchText)
-                    .onSubmit {
-                        productViewModel.getAllProductByTitle(title: searchText)
-                    }
-            }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 20)
-            .background(Color(.systemGray5))
-            .cornerRadius(10)
-            
             GeometryReader{ geo in
-                ScrollView{
-                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        //
+                VStack{
+                    Text("id: \(id)")
+                    HStack(spacing: 20){
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(.gray)
+                            .frame(width: 20, height: 20)
+                        TextField("Search", text: $searchText)
+                            .onSubmit {
+                                productViewModel.getAllProductByTitle(title: searchText)
+                            }
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color(.systemGray5))
+                    .cornerRadius(10)
+                    
+                    ScrollView{
+                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                         ForEach(productViewModel.products, id: \.id){ pro in
                             CardVerticle(geo: geo, name: pro.name, image: pro.image)
                         }
                     }
-                    .onAppear(perform: productViewModel.getAllProduct
-                    )
                 }
                 .scrollIndicators(.hidden)
             }
         }
         .padding(.top, 15)
         .padding(10)
+        .onAppear {
+            if let categoryId = id {
+                productViewModel.getAllProductByCategoryId(id: categoryId)
+            }
+        }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -75,3 +79,4 @@ struct CategoryDetailScreen : View {
 #Preview {
     CategoryDetailScreen()
 }
+

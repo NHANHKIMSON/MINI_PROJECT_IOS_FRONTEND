@@ -7,6 +7,7 @@
 import SwiftUI
 struct CategoryCard: View {
     @State var geo: GeometryProxy
+    @State var id: Int?
     @State var name: String
     @State var icon: String
     @State var isCategoryDetails: Bool = false
@@ -30,7 +31,7 @@ struct CategoryCard: View {
         })
         .buttonStyle(CustomButtonStyle())
         .navigationDestination( isPresented: $isCategoryDetails){
-            CategoryDetailScreen()
+            CategoryDetailScreen(id: id ?? 0)
         }
     }
 }

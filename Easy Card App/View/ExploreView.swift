@@ -24,7 +24,7 @@ struct ExploreView: View {
                 VStack(spacing: 16){
                     LazyVGrid(columns: columns, spacing: geo.size.width * 0.03){
                             ForEach(viewModel.categories, id: \.id) { category in
-                            CategoryCard(geo: geo, name: category.name, icon: category.icon)
+                                CategoryCard(geo: geo, id: category.id, name: category.name, icon: category.icon)
                         }
                     }
                     .padding(12)
@@ -39,14 +39,14 @@ struct ExploreView: View {
                             if signleColumn{
                                 LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                                     ForEach(productViewModel.products, id: \.id){ pro in
-                                        CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                                        CardVerticle(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
                                     }
                                 }
                             }else{
                                 LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
                                     ForEach(productViewModel.products, id: \.id){ pro in
                                         NavigationLink(destination: ItemDetailView()){
-                                            Card(geo: geo, name: pro.name, image: pro.image)
+                                            Card(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
                                         }
                                         .buttonStyle(CustomButtonStyle())
                                     }

@@ -47,14 +47,16 @@ struct MarketScreen: View {
     
     
 struct Card: View {
+    @ObservedObject var productModelView = ProductViewModel()
     @State var geo: GeometryProxy
-    @State var bookmark: Bool = false
-    @State var name: String = ""
-    @State var image: String = ""
-    @State var price: String = "0.00"
+    @State var isFavorite: Bool = false
+    @State var id: Int = 3
+    @State var name: String
+    @State var image: String?
+    @State var price: String?
     var body: some View {
         HStack{
-            AsyncImage(url: URL(string: image)) { phase in
+            AsyncImage(url: URL(string: image ?? "")) { phase in
                 if let loadedImage = phase.image {
                     loadedImage
                         .resizable()
@@ -68,12 +70,15 @@ struct Card: View {
                     .font(.subheadline)
                 Spacer()
                 HStack{
-                    Text("$" + price)
+                    Text("$" + (price ?? ""))
                     Spacer()
                     Button(action: {
-                        bookmark = bookmark == false ? true : false
+                        isFavorite.toggle()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            productModelView.changeStatus(id: id, isFavorite: isFavorite)
+                        }
                     }, label: {
-                        Image(systemName: bookmark ?  "bookmark.fill" : "bookmark")
+                        Image(systemName: isFavorite ?  "bookmark.fill" : "bookmark")
                             .foregroundStyle(.brown)
                     })
                 }
