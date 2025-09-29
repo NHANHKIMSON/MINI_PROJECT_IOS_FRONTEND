@@ -366,6 +366,10 @@ struct AddProductView: View {
                     Text("Add item")
                         .bold()
                 }
+                ToolbarItem(placement: .principal) {
+                    Text("Add item")
+                        .bold()
+                }
             }
         }
 
