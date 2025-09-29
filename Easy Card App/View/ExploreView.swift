@@ -41,7 +41,9 @@ struct ExploreView: View {
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                Card(geo: geo)
+                                NavigationLink(destination : ItemDetailView()){
+                                    Card(geo: geo)
+                                }
                                 Card(geo: geo)
                                 Card(geo: geo)
                                 Card(geo: geo)

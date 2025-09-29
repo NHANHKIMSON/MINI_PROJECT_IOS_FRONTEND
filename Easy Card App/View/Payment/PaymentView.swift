@@ -1,20 +1,19 @@
 //
-//  ItemDetailView.swift
+//  PaymentView.swift
 //  Easy Card App
 //
-//  Created by sovanara  on 27/9/25.
+//  Created by sovanara  on 29/9/25.
 //
-
 
 import SwiftUI
 
-struct ItemDetailView: View {
+struct PaymentView: View {
     @State private var product = ProductDetail.mockProduct
     @State private var isProductInfoExpanded = true
     @State private var selectedImageIndex = 0
     @State private var isSaving = false
     @Environment(\.dismiss) private var dismiss
-    
+    @State var soldOut : Bool = false
     var body: some View {
         ZStack {
             Color(white: 0.97).ignoresSafeArea()
@@ -33,7 +32,7 @@ struct ItemDetailView: View {
                             .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
                     }
                     Spacer()
-                    Text("Detail")
+                    Text(product.name.isEmpty ? "Sold Out" : "Purchased")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(.black)
                     Spacer()
@@ -52,6 +51,21 @@ struct ItemDetailView: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 350)
                                     .tag(index)
+                                    .overlay(
+                                        Text(product.name.isEmpty ? "😭 Sold out" : "✅ Purchased")
+                                            
+                                            .font(.headline)
+                                            .foregroundColor(soldOut ? .green : .red)
+                                            .padding(.horizontal,18)
+                                            .padding(.vertical,15)
+                                            .background(Color.white)
+                                            .cornerRadius(25)
+                                            .padding()
+                                        ,
+                                        alignment: .bottomTrailing
+                                        
+                                    )
+                
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
@@ -140,85 +154,41 @@ struct ItemDetailView: View {
                         Spacer().frame(height: 90)
                     }
                 }
-                
-                HStack(spacing: 12) {
-                    NavigationLink(destination : PaymentView()) {
-                        Text("Buy now")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 48)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color.purple,
-                                        Color(red: 0.45, green: 0.2, blue: 0.8)
-                                    ]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .cornerRadius(15)
-                    }
+                if product.name.isEmpty {
                     
-                    Button(action: {
-                        isSaving.toggle()
-                    }) {
-                        HStack(spacing: 6) {
-                            Image( systemName: isSaving ? "bookmark.fill" : "bookmark")
-                                Text("Save")
+                } else {
+                    HStack {
+                        Button(action: {
+                            
+                        }) {
+                            Text("I received an item")
+                                .font(.system(size: 15, weight: .semibold))
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 48)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color.purple,
+                                            Color(red: 0.45, green: 0.2, blue: 0.8)
+                                        ]),
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                                .cornerRadius(15)
                         }
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(.black)
-                        .frame(width: 90, height: 48)
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                        )
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(Color.white.shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: -1))
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(Color.white.shadow(color: .black.opacity(0.05), radius: 3, x: 0, y: -1))
             }
         }
         .navigationBarHidden(true)
     }
 }
-
-struct ProductInfoRow: View {
-    let title: String
-    let value: String
-    var isLast: Bool = false
-    var multiline: Bool = false
-    
-    var body: some View {
-        VStack(spacing: 0) {
-            HStack(alignment: .top, spacing: 12) {
-                Text(title)
-                    .font(.system(size: 14))
-                    .foregroundColor(.gray)
-                    .frame(width: 100, alignment: .leading)
-
-                Text(value)
-                    .font(.system(size: 14))
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: multiline)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-
-            if !isLast {
-                Divider()
-                    .padding(.leading, 16)
-            }
-        }
-    }
-}
-
 #Preview {
-    ItemDetailView()
+    PaymentView()
 }
+
