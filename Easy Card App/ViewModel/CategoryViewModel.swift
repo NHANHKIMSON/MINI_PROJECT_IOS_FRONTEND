@@ -12,7 +12,7 @@ class CategoryViewModel: ObservableObject {
     @Published var categories: [Category] = []
 
     func fetchPosts() {
-        let url = "http://localhost:9090/api/v1/category"
+        let url = "http://localhost:8080/api/v1/category"
         
         AF.request(url)
             .validate()
@@ -30,4 +30,5 @@ class CategoryViewModel: ObservableObject {
             }
         }
     }
+    
 }
