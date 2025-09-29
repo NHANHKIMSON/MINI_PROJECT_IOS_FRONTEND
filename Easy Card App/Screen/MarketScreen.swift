@@ -9,6 +9,8 @@ import SwiftUI
 struct MarketScreen: View {
     @Binding var gridType: Bool
     @State var selectedTab: Int = 0
+    @StateObject var bookmarkManager = BookmarkManager()
+
     var body: some View {
         // Tab Screen
         TabViews(tabs: [
@@ -28,7 +30,7 @@ struct MarketScreen: View {
                 case 1:
                     ExploreView(signleColumn: $gridType)
                 case 2:
-                    Text("Saved")
+                    SavedView(signleColumn: $gridType)
                 default:
                     Text("Defaul")
                 }
@@ -43,54 +45,60 @@ struct MarketScreen: View {
 //}
 #Preview {
     ContentView()
+        .environmentObject(BookmarkManager())
 }
 
     
     
 struct Card: View {
-        @State var geo: GeometryProxy
-        @State var bookmark: Bool = false
-        var body: some View {
-            HStack{
-                Image("iwatch")
-                    .resizable()
-                    .scaledToFit()
-                VStack(alignment: .leading){
-                    Text("Apple Watch Ultra Generation")
-                        .lineLimit(1)
-                        .font(.subheadline)
-                    Spacer()
-                    HStack{
-                        Text("$1,400.00")
-                        Spacer()
-                        Button(action: {
-                            bookmark = bookmark == false ? true : false
-                        }, label: {
-                            Image(systemName: bookmark ?  "bookmark.fill" : "bookmark")
-                                .foregroundStyle(.brown)
-                        })
-                    }
-                    .font(.subheadline)
-                }
-                .padding([.trailing, .top, .bottom], 12)
-            }
-            .overlay{
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(.gray.opacity(0.6), lineWidth: 2)
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .frame(height: geo.size.height * 0.2)
-        }
-    }
-    
-struct CardVerticle: View {
-    @State var geo: GeometryProxy
-    @State var bookmark: Bool = false
-    @State var name: String
-    @State var image: String?
-    @State var price: String?
+    let geo: GeometryProxy
+    @EnvironmentObject var bookmarkManager: BookmarkManager
+    var itemID: String
+
     var body: some View {
-        VStack{
+        HStack {
+            Image("iwatch")
+                .resizable()
+                .scaledToFit()
+            VStack(alignment: .leading) {
+                Text("Apple Watch Ultra Generation")
+                    .lineLimit(1)
+                    .font(.subheadline)
+                Spacer()
+                HStack {
+                    Text("$1,400.00")
+                    Spacer()
+                    Button {
+                        bookmarkManager.toggleBookmark(for: itemID)
+                    } label: {
+                        Image(systemName: bookmarkManager.isBookmarked(itemID) ? "bookmark.fill" : "bookmark")
+                            .foregroundStyle(.yellow)
+                    }
+                }
+                .font(.subheadline)
+            }
+            .padding([.trailing, .top, .bottom], 12)
+        }
+        .overlay {
+            RoundedRectangle(cornerRadius: 24)
+                .stroke(.gray.opacity(0.6), lineWidth: 2)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .frame(height: geo.size.height * 0.2)
+    }
+}
+
+struct CardVerticle: View {
+    let geo: GeometryProxy
+    let name: String
+    let image: String?
+    let isFavorite: Bool?
+    let price: String?
+    @EnvironmentObject var bookmarkManager: BookmarkManager
+    var itemID: String
+
+    var body: some View {
+        VStack {
             AsyncImage(url: URL(string: image ?? "")) { phase in
                 if let loadedImage = phase.image {
                     loadedImage
@@ -100,26 +108,38 @@ struct CardVerticle: View {
                         .clipped()
                 }
             }
-            VStack(alignment: .leading){
+            
+//            AsyncImage(url: URL(string: image ?? "")) { image in
+//                image
+//                    .resizable()
+//                    .scaledToFill()
+//                    .frame(width: geo.size.width, height: geo.size.width * 0.3)
+//                    .clipped()
+//            } placeholder: {
+//                ProgressView() // <- This is the placeholder
+//                    .frame(width: geo.size.width, height: geo.size.width * 0.3)
+//            }
+
+            VStack(alignment: .leading) {
                 Text(name)
                     .lineLimit(1)
                     .font(.subheadline)
                 Spacer()
-                HStack{
-                    Text("\(price) $")
+                HStack {
+                    Text("\(price ?? "0") $")
                     Spacer()
-                    Button(action: {
-                        bookmark = bookmark == false ? true : false
-                    }, label: {
-                        Image(systemName: bookmark ?  "bookmark.fill" : "bookmark")
-                            .foregroundStyle(.brown)
-                    })
+                    Button {
+                        bookmarkManager.toggleBookmark(for: itemID)
+                    } label: {
+                        Image(systemName: bookmarkManager.isBookmarked(itemID) ? "bookmark.fill" : "bookmark")
+                            .foregroundStyle(.yellow)
+                    }
                 }
                 .font(.subheadline)
             }
             .padding(12)
         }
-        .overlay{
+        .overlay {
             RoundedRectangle(cornerRadius: 24)
                 .stroke(.gray.opacity(0.6), lineWidth: 2)
         }

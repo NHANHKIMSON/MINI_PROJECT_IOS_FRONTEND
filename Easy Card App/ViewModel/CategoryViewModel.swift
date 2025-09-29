@@ -26,7 +26,7 @@ class CategoryViewModel: ObservableObject {
                         print("Something went wrong")
                     }
                 case .failure(let error):
-                    print("Error")
+                    print("Error: \(error)")
             }
         }
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ForYouView: View {
     @ObservedObject var viewModel = ProductViewModel()
+    
     let oneColumn = [
         GridItem(.flexible()),
     ]
@@ -17,23 +18,47 @@ struct ForYouView: View {
         GridItem(.flexible()),
     ]
     @Binding var signleColumn: Bool
+    
+    @State var data : [PayloadProduct] = []
+    
     var body: some View {
         GeometryReader{ geo in
             ScrollView{
+               
                 if signleColumn{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-                        ForEach(viewModel.products, id: \.id){ pro in
-                            CardVerticle(geo: geo, name: pro.name, image: pro.image)
+//                        ForEach(data) { data in
+//                            Text("\(data.isFavorite)")
+//                        }
+                        
+                        ForEach(data) { data in
+                            CardVerticle(
+                                geo: geo,
+                                name: data.name,
+                                image: data.image,
+                                isFavorite: data.isFavorite,
+                                price: "\((data.price))",
+                                itemID: "\(data.id)"
+                            )
                         }
                     }
                     .onAppear(perform: viewModel.getAllProduct)
+                    .onAppear{
+                        viewModel.getProducts { data, success in
+                            if success {
+                                self.data = data
+                            }else{
+                                print("Error")
+                            }
+                        }
+                    }
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
+                        Card(geo: geo, itemID: "1")
+                        Card(geo: geo, itemID: "2")
+                        Card(geo: geo, itemID: "3")
+                        Card(geo: geo, itemID: "4")
+                        Card(geo: geo, itemID: "5")
                     }
                 }
             }
@@ -44,4 +69,5 @@ struct ForYouView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(BookmarkManager())
 }

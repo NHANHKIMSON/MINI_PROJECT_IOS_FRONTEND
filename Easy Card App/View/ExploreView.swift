@@ -18,6 +18,7 @@ struct ExploreView: View {
         GridItem(.flexible()),
     ]
     @Binding var signleColumn: Bool
+    
     var body: some View {
         GeometryReader{ geo in
             ScrollView{
@@ -36,16 +37,23 @@ struct ExploreView: View {
                         if signleColumn{
                             LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
                                 ForEach(productViewModel.products, id: \.id){ pro in
-                                    CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                                    CardVerticle(
+                                        geo: geo,
+                                        name: pro.name,
+                                        image: pro.image,
+                                        isFavorite: pro.isFavorite ?? nil,
+                                        price: pro.price != nil ? "\(pro.price!)" : nil,
+                                        itemID: "\(pro.id)"
+                                    )
                                 }
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
+                                Card(geo: geo, itemID: "1")
+                                Card(geo: geo, itemID: "2")
+                                Card(geo: geo, itemID: "3")
+                                Card(geo: geo, itemID: "4")
+                                Card(geo: geo, itemID: "5")
                             }
                         }
                     }

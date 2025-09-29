@@ -12,6 +12,7 @@ struct Easy_Card_AppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(BookmarkManager())
         }
     }
 }
