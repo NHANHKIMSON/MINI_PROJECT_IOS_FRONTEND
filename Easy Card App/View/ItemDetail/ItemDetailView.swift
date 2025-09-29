@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ItemDetailView: View {
-    @State private var product = Product.mockProduct
+    @State private var product = ProductDetail.mockProduct
     @State private var isProductInfoExpanded = true
     @State private var selectedImageIndex = 0
     @State private var isSaving = false

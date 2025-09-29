@@ -7,7 +7,19 @@
 
 import Foundation
 
-struct Product {
+struct ProductResponse: Codable {
+    let payload: [Product]
+}
+
+struct Product: Codable {
+    let id: Int
+    let name: String
+    let image: String?
+    let isFavorite: Bool?
+    let price: Int?
+}
+
+struct ProductDetail {
     let id: String
     let name: String
     let price: Double
@@ -22,8 +34,8 @@ struct Product {
     let description: String
 }
 
-extension Product {
-    static let mockProduct = Product(
+extension ProductDetail {
+    static let mockProduct = ProductDetail(
         id: "#123400",
         name: "iPhone 15 Pro Max 256gb (LL)",
         price: 1750.00,
