@@ -34,17 +34,13 @@ struct ExploreView: View {
                     }
                     Group{
                         if signleColumn{
-                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.04){
+                            LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                                 ForEach(productViewModel.products, id: \.id){ pro in
                                     CardVerticle(geo: geo, name: pro.name, image: pro.image)
                                 }
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
                                 Card(geo: geo)
                             }
                         }
