@@ -158,9 +158,7 @@ struct PaymentView: View {
                     
                 } else {
                     HStack {
-                        Button(action: {
-                            
-                        }) {
+                        NavigationLink(destination: SignUpView()){
                             Text("I received an item")
                                 .font(.system(size: 15, weight: .semibold))
                                 .foregroundColor(.white)
