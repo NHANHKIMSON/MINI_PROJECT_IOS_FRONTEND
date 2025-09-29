@@ -48,40 +48,49 @@ struct MarketScreen: View {
     
     
 struct Card: View {
-        @State var geo: GeometryProxy
-        @State var bookmark: Bool = false
-        var body: some View {
-            HStack{
-                Image("iwatch")
-                    .resizable()
-                    .scaledToFit()
-                VStack(alignment: .leading){
-                    Text("Apple Watch Ultra Generation")
-                        .lineLimit(1)
-                        .font(.subheadline)
-                    Spacer()
-                    HStack{
-                        Text("$1,400.00")
-                        Spacer()
-                        Button(action: {
-                            bookmark = bookmark == false ? true : false
-                        }, label: {
-                            Image(systemName: bookmark ?  "bookmark.fill" : "bookmark")
-                                .foregroundStyle(.brown)
-                        })
-                    }
-                    .font(.subheadline)
+    @State var geo: GeometryProxy
+    @State var bookmark: Bool = false
+    @State var name: String = ""
+    @State var image: String = ""
+    @State var price: String = "0.00"
+    var body: some View {
+        HStack{
+            AsyncImage(url: URL(string: image)) { phase in
+                if let loadedImage = phase.image {
+                    loadedImage
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geo.size.width * 0.35)
                 }
-                .padding([.trailing, .top, .bottom], 12)
             }
-            .overlay{
-                RoundedRectangle(cornerRadius: 24)
-                    .stroke(.gray.opacity(0.6), lineWidth: 2)
+            VStack(alignment: .leading){
+                Text(name)
+                    .lineLimit(1)
+                    .font(.subheadline)
+                Spacer()
+                HStack{
+                    Text("$" + price)
+                    Spacer()
+                    Button(action: {
+                        bookmark = bookmark == false ? true : false
+                    }, label: {
+                        Image(systemName: bookmark ?  "bookmark.fill" : "bookmark")
+                            .foregroundStyle(.brown)
+                    })
+                }
+                .font(.subheadline)
             }
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .frame(height: geo.size.height * 0.2)
+            .padding([.trailing, .top, .bottom], 12)
         }
+        .background(Color.white)
+        .overlay{
+            RoundedRectangle(cornerRadius: 24)
+                .stroke(.gray.opacity(0.6), lineWidth: 2)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .frame(height: geo.size.height * 0.2)
     }
+}
     
 struct CardVerticle: View {
     @State var geo: GeometryProxy

@@ -8,13 +8,14 @@
 import SwiftUI
 struct CustomAsynImage: View{
     @State var image: String?
+    @State var geo: GeometryProxy
     var body: some View{
         AsyncImage(url: URL(string: image ?? "")) { phase in
             if let loadedImage = phase.image {
                 loadedImage
                     .resizable()
-                    .scaledToFill()
-                    .clipped()
+                    .scaledToFit()
+                    .frame(height: geo.size.width * 0.35)
             }
         }
     }

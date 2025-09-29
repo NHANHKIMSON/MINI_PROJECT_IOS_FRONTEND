@@ -29,12 +29,11 @@ struct ForYouView: View {
                     .onAppear(perform: viewModel.getAllProduct)
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
-                        Card(geo: geo)
+                        ForEach(viewModel.products, id: \.id){ pro in
+                            Card(geo: geo, name: pro.name, image: pro.image)
+                        }
                     }
+                    .onAppear(perform: viewModel.getAllProduct)
                 }
             }
             .scrollIndicators(.hidden)

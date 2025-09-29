@@ -32,7 +32,7 @@ struct ExploreView: View {
                         Text("Top Item")
                         Spacer()
                     }
-                    Group{
+                    VStack{
                         if signleColumn{
                             LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                                 ForEach(productViewModel.products, id: \.id){ pro in
@@ -41,13 +41,9 @@ struct ExploreView: View {
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                NavigationLink(destination : ItemDetailView()){
-                                    Card(geo: geo)
+                                ForEach(productViewModel.products, id: \.id){ pro in
+                                    Card(geo: geo, name: pro.name, image: pro.image)
                                 }
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
-                                Card(geo: geo)
                             }
                         }
                     }
