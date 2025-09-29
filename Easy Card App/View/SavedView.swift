@@ -68,9 +68,15 @@ struct SavedView: View {
                         .padding(.top, 150)
                     } else {
                         LazyVGrid(columns: oneColumn, spacing: 16) {
-                            ForEach(bookmarkManager.savedItems, id: \.self) { item in
-                                Card(geo: geo, itemID: item)
-                                    .frame(height: geo.size.height * 0.2)
+                            ForEach(savedViewModel.allSavedData, id: \.id) { item in
+                                Card(
+                                    geo: geo,
+                                    name: item.name,
+                                    image: item.image,
+                                    isFavorite: item.isFavorite,
+                                    price: "\(item.price)",
+                                    itemID: "\(item.id)"
+                                ).frame(height: geo.size.height * 0.2)
                             }
                         }
                         .padding(.horizontal, 5)

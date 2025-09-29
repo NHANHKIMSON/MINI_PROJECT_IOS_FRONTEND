@@ -52,26 +52,37 @@ struct MarketScreen: View {
     
 struct Card: View {
     let geo: GeometryProxy
+    let name: String
+    let image: String?
+    @State var isFavorite: Bool?
+    let price: String?
     @EnvironmentObject var bookmarkManager: BookmarkManager
     var itemID: String
 
+
     var body: some View {
         HStack {
-            Image("iwatch")
-                .resizable()
-                .scaledToFit()
+            AsyncImage(url: URL(string: image ?? "")) { phase in
+                if let loadedImage = phase.image {
+                    loadedImage
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width * 0.35, height: geo.size.width * 0.3)
+                        .clipped()
+                }
+            }
             VStack(alignment: .leading) {
-                Text("Apple Watch Ultra Generation")
+                Text(name)
                     .lineLimit(1)
                     .font(.subheadline)
                 Spacer()
                 HStack {
-                    Text("$1,400.00")
+                    Text("\(price ?? "0") $")
                     Spacer()
                     Button {
-                        bookmarkManager.toggleBookmark(for: itemID)
+                        isFavorite?.toggle()
                     } label: {
-                        Image(systemName: bookmarkManager.isBookmarked(itemID) ? "bookmark.fill" : "bookmark")
+                        Image(systemName: isFavorite == true ? "bookmark.fill" : "bookmark")
                             .foregroundStyle(.yellow)
                     }
                 }
@@ -92,7 +103,7 @@ struct CardVerticle: View {
     let geo: GeometryProxy
     let name: String
     let image: String?
-    let isFavorite: Bool?
+    @State var isFavorite: Bool?
     let price: String?
     @EnvironmentObject var bookmarkManager: BookmarkManager
     var itemID: String
@@ -109,17 +120,6 @@ struct CardVerticle: View {
                 }
             }
             
-//            AsyncImage(url: URL(string: image ?? "")) { image in
-//                image
-//                    .resizable()
-//                    .scaledToFill()
-//                    .frame(width: geo.size.width, height: geo.size.width * 0.3)
-//                    .clipped()
-//            } placeholder: {
-//                ProgressView() // <- This is the placeholder
-//                    .frame(width: geo.size.width, height: geo.size.width * 0.3)
-//            }
-
             VStack(alignment: .leading) {
                 Text(name)
                     .lineLimit(1)
@@ -129,10 +129,10 @@ struct CardVerticle: View {
                     Text("\(price ?? "0") $")
                     Spacer()
                     Button {
-                        bookmarkManager.toggleBookmark(for: itemID)
+                        isFavorite?.toggle()
                     } label: {
-                        Image(systemName: bookmarkManager.isBookmarked(itemID) ? "bookmark.fill" : "bookmark")
-                            .foregroundStyle(.yellow)
+                        Image(systemName: isFavorite == true ? "bookmark.fill" : "bookmark")
+                            .foregroundColor(.yellow)
                     }
                 }
                 .font(.subheadline)

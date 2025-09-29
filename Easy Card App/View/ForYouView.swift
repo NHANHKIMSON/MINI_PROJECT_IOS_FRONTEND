@@ -27,10 +27,6 @@ struct ForYouView: View {
                
                 if signleColumn{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.02){
-//                        ForEach(data) { data in
-//                            Text("\(data.isFavorite)")
-//                        }
-                        
                         ForEach(data) { data in
                             CardVerticle(
                                 geo: geo,
@@ -42,27 +38,31 @@ struct ForYouView: View {
                             )
                         }
                     }
-                    .onAppear(perform: viewModel.getAllProduct)
-                    .onAppear{
-                        viewModel.getProducts { data, success in
-                            if success {
-                                self.data = data
-                            }else{
-                                print("Error")
-                            }
-                        }
-                    }
+//                    .onAppear(perform: viewModel.getAllProduct)
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                        Card(geo: geo, itemID: "1")
-                        Card(geo: geo, itemID: "2")
-                        Card(geo: geo, itemID: "3")
-                        Card(geo: geo, itemID: "4")
-                        Card(geo: geo, itemID: "5")
+                        ForEach(data) { data in
+                            Card(
+                                geo: geo,
+                                name: data.name,
+                                image: data.image,
+                                isFavorite: data.isFavorite,
+                                price: "\(data.price)",
+                                itemID: "\(data.id)")
+                        }
                     }
                 }
             }
             .scrollIndicators(.hidden)
+            .onAppear{
+                viewModel.getProducts { data, success in
+                    if success {
+                        self.data = data
+                    }else{
+                        print("Error")
+                    }
+                }
+            }
         }
     }
 }

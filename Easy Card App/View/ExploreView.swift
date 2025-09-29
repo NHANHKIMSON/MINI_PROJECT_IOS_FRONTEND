@@ -49,11 +49,7 @@ struct ExploreView: View {
                             }
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
-                                Card(geo: geo, itemID: "1")
-                                Card(geo: geo, itemID: "2")
-                                Card(geo: geo, itemID: "3")
-                                Card(geo: geo, itemID: "4")
-                                Card(geo: geo, itemID: "5")
+//                                Card(geo: geo, itemID: "1")
                             }
                         }
                     }
