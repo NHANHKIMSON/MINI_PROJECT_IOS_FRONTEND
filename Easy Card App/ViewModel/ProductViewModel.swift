@@ -42,6 +42,9 @@ class ProductViewModel: ObservableObject {
                 }
         }
     }
+    func changeStatus(){
+        
+    }
 }
 //AF.request(url)
 //    .validate()

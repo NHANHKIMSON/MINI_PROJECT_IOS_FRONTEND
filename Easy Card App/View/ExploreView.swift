@@ -42,7 +42,10 @@ struct ExploreView: View {
                         }else{
                             LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.02){
                                 ForEach(productViewModel.products, id: \.id){ pro in
-                                    Card(geo: geo, name: pro.name, image: pro.image)
+                                    NavigationLink(destination: ItemDetailView()){
+                                        Card(geo: geo, name: pro.name, image: pro.image)
+                                    }
+                                    .buttonStyle(CustomButtonStyle())
                                 }
                             }
                         }

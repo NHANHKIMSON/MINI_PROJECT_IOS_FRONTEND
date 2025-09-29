@@ -21,9 +21,9 @@ struct ForYouView: View {
         GeometryReader{ geo in
             ScrollView{
                 if signleColumn{
-                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.04){
+                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                         ForEach(viewModel.products, id: \.id){ pro in
-                            CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                            CardVerticle(geo: geo, isFavorite: pro.isFavorite, name: pro.name, image: pro.image)
                         }
                     }
                     .onAppear(perform: viewModel.getAllProduct)
