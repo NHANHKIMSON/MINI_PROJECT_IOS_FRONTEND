@@ -1,15 +1,8 @@
-//
-//  SavedView.swift
-//  Easy Card App
-//
-//  Created by Mac on 29/9/25.
-//
 
 import SwiftUI
 
 
 struct SavedView: View {
-    @EnvironmentObject var bookmarkManager: BookmarkManager
     @Binding var signleColumn: Bool
     
     @ObservedObject var savedViewModel = SavedViewModel()
@@ -81,7 +74,6 @@ struct SavedView: View {
                         }
                         .padding(.horizontal, 5)
                     }
-
                 }
             }
             .onAppear() {
@@ -94,5 +86,4 @@ struct SavedView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(BookmarkManager())
 }

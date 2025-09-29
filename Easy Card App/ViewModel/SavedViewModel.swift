@@ -1,9 +1,3 @@
-//
-//  SavedViewModel.swift
-//  Easy Card App
-//
-//  Created by Mac on 29/9/25.
-//
 
 import Alamofire
 import Foundation
@@ -26,5 +20,19 @@ class SavedViewModel: ObservableObject {
                 print("error \(error)")
             }
         }
+    }
+    
+    func updateFavorite(id: Int, isFavorite: Bool) {
+        let url = "http://localhost:9090/api/v1/product/\(id)"
+        AF.request(url, method: .patch)
+            .validate()
+            .responseJSON { response in
+                switch response.result {
+                case .success(let data):
+                    print("Successfully updated: \(data)")
+                case .failure(let error):
+                    print("error \(error)")
+                }
+            }
     }
 }

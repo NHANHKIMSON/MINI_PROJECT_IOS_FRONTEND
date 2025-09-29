@@ -9,7 +9,6 @@ import SwiftUI
 struct MarketScreen: View {
     @Binding var gridType: Bool
     @State var selectedTab: Int = 0
-    @StateObject var bookmarkManager = BookmarkManager()
 
     var body: some View {
         // Tab Screen
@@ -45,7 +44,6 @@ struct MarketScreen: View {
 //}
 #Preview {
     ContentView()
-        .environmentObject(BookmarkManager())
 }
 
     
@@ -56,7 +54,6 @@ struct Card: View {
     let image: String?
     @State var isFavorite: Bool?
     let price: String?
-    @EnvironmentObject var bookmarkManager: BookmarkManager
     var itemID: String
 
 
@@ -105,7 +102,6 @@ struct CardVerticle: View {
     let image: String?
     @State var isFavorite: Bool?
     let price: String?
-    @EnvironmentObject var bookmarkManager: BookmarkManager
     var itemID: String
 
     var body: some View {

@@ -69,5 +69,4 @@ struct ForYouView: View {
 
 #Preview {
     ContentView()
-        .environmentObject(BookmarkManager())
 }
