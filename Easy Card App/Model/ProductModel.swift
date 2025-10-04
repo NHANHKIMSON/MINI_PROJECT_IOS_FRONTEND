@@ -14,20 +14,18 @@ struct ProductResponse: @nonisolated Codable {
     let time: String
 }
 
-struct Product: @nonisolated Codable {
+struct Product: Codable {
     let id: Int
     let name: String
-    let image: String
+    let imagesUrl: [String]
     let isFavorite: Bool
-    let price: Double
+    let price: Double?
     let category: Category
+    let productDetail: ProductDetail
 }
 
-struct ProductDetail {
-    let id: String
-    let name: String
-    let price: Double
-    let images: [String]
+struct ProductDetail: Codable {
+    let id: Int
     let condition: String
     let brand: String
     let model: String
@@ -38,20 +36,25 @@ struct ProductDetail {
     let description: String
 }
 
-extension ProductDetail {
-    static let mockProduct = ProductDetail(
-        id: "#123400",
+extension Product {
+    static let mockProduct = Product(
+        id: 123400,
         name: "iPhone 15 Pro Max 256gb (LL)",
+        imagesUrl: ["Product1", "Product2", "Product3", "Product4"],
+        isFavorite: false,
         price: 1750.00,
-        images: ["Product1", "Product2", "Product3", "Product4"],
-        condition: "New",
-        brand: "Apple",
-        model: "iPhone 15 Pro Max",
-        color: "Natural titanium",
-        year: "2023",
-        size: "XL",
-        type: "—",
-        description: "The product is only for sale and available in Phnom Penh only."
+        category: Category(id: 1, name: "Electronics", icon: "iphone"),
+        productDetail: ProductDetail(
+            id: 1,
+            condition: "New",
+            brand: "Apple",
+            model: "iPhone 15 Pro Max",
+            color: "Natural titanium",
+            year: "2023",
+            size: "XL",
+            type: "—",
+            description: "The product is only for sale and available in Phnom Penh only."
+        )
     )
 }
 

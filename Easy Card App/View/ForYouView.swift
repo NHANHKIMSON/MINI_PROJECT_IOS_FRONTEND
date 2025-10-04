@@ -22,20 +22,27 @@ struct ForYouView: View {
             ScrollView{
                 if signleColumn{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
-                        ForEach(viewModel.products, id: \.id){ pro in
-                            NavigationLink(destination: ItemDetailView()){
-                                CardVerticle(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
+                        ForEach(viewModel.products, id: \.id) { pro in
+                            NavigationLink(destination: ItemDetailView(product: pro)) {
+                                CardVerticle(
+                                    geo: geo,
+                                    isFavorite: pro.isFavorite,
+                                    id: pro.id,
+                                    name: pro.name,
+                                    image: pro.imagesUrl.first ?? "placeholder"
+                                )
                             }
                             .buttonStyle(CustomButtonStyle())
                         }
+
                     }
                     .padding(10)
                     .onAppear(perform: viewModel.getAllProduct)
                 }else{
                     LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
                         ForEach(viewModel.products, id: \.id){ pro in
-                            NavigationLink(destination: ItemDetailView()){
-                                Card(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
+                            NavigationLink(destination: ItemDetailView(product: pro)){
+                                Card(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.imagesUrl.first ?? "placeholder")
                             }
                             .buttonStyle(CustomButtonStyle())
                         }

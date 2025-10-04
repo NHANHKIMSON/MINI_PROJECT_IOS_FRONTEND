@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct ItemDetailView: View {
-    @State private var product = ProductDetail.mockProduct
-    @State private var isProductInfoExpanded = true
-    @State private var selectedImageIndex = 0
-    @State private var isSaving = false
+    @State var product: Product
+    @State var isProductInfoExpanded = true
+    @State var selectedImageIndex = 0
+    @State var isSaving = false
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -46,35 +46,67 @@ struct ItemDetailView: View {
                     VStack(spacing: 20) {
                         
                         TabView(selection: $selectedImageIndex) {
-                            ForEach(Array(product.images.enumerated()), id: \.offset) { index, imageName in
-                                Image(imageName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 350)
+                            ForEach(Array(product.imagesUrl.enumerated()), id: \.offset) { index, imageUrlString in
+                                if let url = URL(string: imageUrlString) {
+                                    AsyncImage(url: url) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(height: 350)
+                                        case .success(let image):
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height: 350)
+                                        case .failure:
+                                            Image(systemName: "photo")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(height: 350)
+                                                .foregroundColor(.gray)
+                                        @unknown default:
+                                            EmptyView()
+                                        }
+                                    }
                                     .tag(index)
+                                }
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
                         .frame(height: 360)
                         .padding(.top, 10)
+
                         
                         HStack(spacing: 12) {
-                            ForEach(Array(product.images.enumerated()), id: \.offset) { index, imageName in
+                            ForEach(Array(product.imagesUrl.enumerated()), id: \.offset) { index, imageName in
                                 Button(action: {
                                     withAnimation {
                                         selectedImageIndex = index
                                     }
                                 }) {
-                                    Image(imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                        .background(Color(white: 0.95))
-                                        .cornerRadius(8)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .stroke(selectedImageIndex == index ? Color.purple : Color.gray.opacity(0.3), lineWidth: 2)
-                                        )
+                                    if let url = URL(string: imageName) {
+                                        AsyncImage(url: url) { phase in
+                                            switch phase {
+                                            case .empty:
+                                                ProgressView()
+                                                    .frame(width: 50, height: 50)
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 50, height: 50)
+                                            case .failure:
+                                                Image(systemName: "photo")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 50, height: 50)
+                                                    .foregroundColor(.gray)
+                                            @unknown default:
+                                                EmptyView()
+                                            }
+                                        }
+                                    }
+
                                 }
                             }
                             Spacer()
@@ -90,7 +122,7 @@ struct ItemDetailView: View {
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.black)
                             
-                            Text("$\(String(format: "%.2f", product.price))")
+                            Text("$\(String(format: "%.2f", product.price ?? "00"))")
                                 .font(.system(size: 22, weight: .bold))
                                 .foregroundColor(Color(red: 0.35, green: 0, blue: 0.7))
                         }
@@ -119,16 +151,17 @@ struct ItemDetailView: View {
                             
                             if isProductInfoExpanded {
                                 VStack(spacing: 0) {
-                                    ProductInfoRow(title: "Condition", value: product.condition)
-                                    ProductInfoRow(title: "Brand", value: product.brand)
-                                    ProductInfoRow(title: "Model", value: product.model)
-                                    ProductInfoRow(title: "Color", value: product.color)
-                                    ProductInfoRow(title: "Year", value: product.year)
-                                    ProductInfoRow(title: "Size", value: product.size)
-                                    ProductInfoRow(title: "Type", value: product.type)
-                                    
-                                    
-                                    ProductInfoRow(title: "Description", value: product.description, isLast: true, multiline: true)
+                                    ProductInfoRow(title: "Condition", value: product.productDetail.condition)
+                                    ProductInfoRow(title: "Brand", value: product.productDetail.brand)
+                                    ProductInfoRow(title: "Model", value: product.productDetail.model)
+                                    ProductInfoRow(title: "Color", value: product.productDetail.color)
+                                    ProductInfoRow(title: "Year", value: product.productDetail.year)
+                                    ProductInfoRow(title: "Size", value: product.productDetail.size)
+                                    ProductInfoRow(title: "Type", value: product.productDetail.type)
+                                    ProductInfoRow(title: "Description",
+                                                   value: product.productDetail.description,
+                                                   isLast: true,
+                                                   multiline: true)
                                 }
                             }
                         }
@@ -219,6 +252,6 @@ struct ProductInfoRow: View {
     }
 }
 
-#Preview {
-    ItemDetailView()
-}
+//#Preview {
+//    ItemDetailView()
+//}

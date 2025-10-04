@@ -37,7 +37,7 @@ struct CategoryDetailScreen : View {
                     ScrollView{
                     LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
                         ForEach(productViewModel.products, id: \.id){ pro in
-                            CardVerticle(geo: geo, name: pro.name, image: pro.image)
+                            CardVerticle(geo: geo, name: pro.name, image: pro.imagesUrl.first)
                         }
                     }
                 }

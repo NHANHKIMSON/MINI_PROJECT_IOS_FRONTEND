@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+
 struct ExploreView: View {
     @ObservedObject var viewModel = CategoryViewModel()
     @ObservedObject var productViewModel = ProductViewModel()
@@ -35,24 +36,39 @@ struct ExploreView: View {
                             Spacer()
                         }
                         .padding(.leading, 12)
-                        VStack{
-                            if signleColumn{
-                                LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
-                                    ForEach(productViewModel.products, id: \.id){ pro in
-                                        CardVerticle(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
-                                    }
-                                }
-                            }else{
-                                LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
-                                    ForEach(productViewModel.products, id: \.id){ pro in
-                                        NavigationLink(destination: ItemDetailView()){
-                                            Card(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
+                        VStack {
+                            Group {
+                                if signleColumn {
+                                    LazyVGrid(columns: columns, spacing: geo.size.height * 0.028) {
+                                        ForEach(productViewModel.products, id: \.id) { pro in
+                                            CardVerticle(
+                                                geo: geo,
+                                                isFavorite: pro.isFavorite,
+                                                id: pro.id,
+                                                name: pro.name,
+                                                image: pro.imagesUrl.first ?? "placeholder"
+                                            )
                                         }
-                                        .buttonStyle(CustomButtonStyle())
+                                    }
+                                } else {
+                                    LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001) {
+                                        ForEach(productViewModel.products, id: \.id) { pro in
+                                            NavigationLink(destination: ItemDetailView(product: pro)) {
+                                                Card(
+                                                    geo: geo,
+                                                    isFavorite: pro.isFavorite,
+                                                    id: pro.id,
+                                                    name: pro.name,
+                                                    image: pro.imagesUrl.first ?? "placeholder"
+                                                )
+                                            }
+                                            .buttonStyle(CustomButtonStyle())
+                                        }
                                     }
                                 }
                             }
                         }
+
                         .padding(.horizontal, 12)
                         .onAppear(perform: productViewModel.getAllProduct)
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PaymentView: View {
-    @State private var product = ProductDetail.mockProduct
+    @State private var product = Product.mockProduct
     @State private var isProductInfoExpanded = true
     @State private var selectedImageIndex = 0
     @State private var isSaving = false
@@ -45,27 +45,28 @@ struct PaymentView: View {
                     VStack(spacing: 20) {
                         
                         TabView(selection: $selectedImageIndex) {
-                            ForEach(Array(product.images.enumerated()), id: \.offset) { index, imageName in
-                                Image(imageName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 350)
-                                    .tag(index)
-                                    .overlay(
-                                        Text(product.name.isEmpty ? "😭 Sold out" : "✅ Purchased")
-                                            
-                                            .font(.headline)
-                                            .foregroundColor(soldOut ? .green : .red)
-                                            .padding(.horizontal,18)
-                                            .padding(.vertical,15)
-                                            .background(Color.white)
-                                            .cornerRadius(25)
-                                            .padding()
-                                        ,
-                                        alignment: .bottomTrailing
-                                        
-                                    )
-                
+                            ForEach(Array(product.imagesUrl.enumerated()), id: \.offset) { index, imageURL in
+                                AsyncImage(url: URL(string: imageURL)) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 350)
+                                        .tag(index)
+                                        .overlay(
+                                            Text(product.name.isEmpty ? "😭 Sold Out" : "✅ Purchased")
+                                                .font(.headline)
+                                                .foregroundColor(product.name.isEmpty ? .red : .green)
+                                                .padding(.horizontal, 18)
+                                                .padding(.vertical, 15)
+                                                .background(Color.white)
+                                                .cornerRadius(25)
+                                                .padding(),
+                                            alignment: .bottomTrailing
+                                        )
+                                } placeholder: {
+                                    ProgressView()
+                                        .frame(height: 350)
+                                }
                             }
                         }
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
@@ -73,24 +74,25 @@ struct PaymentView: View {
                         .padding(.top, 10)
                         
                         HStack(spacing: 12) {
-                            ForEach(Array(product.images.enumerated()), id: \.offset) { index, imageName in
-                                Button(action: {
-                                    withAnimation {
-                                        selectedImageIndex = index
+                            ForEach(Array(product.imagesUrl.enumerated()), id: \.offset) { index, imageName in
+                                    Button(action: {
+                                        withAnimation {
+                                            selectedImageIndex = index
+                                        }
+                                    }) {
+                                        Image(imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50, height: 50)
+                                            .background(Color(white: 0.95))
+                                            .cornerRadius(8)
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 8)
+                                                    .stroke(selectedImageIndex == index ? Color.purple : Color.gray.opacity(0.3),
+                                                            lineWidth: 2)
+                                            )
                                     }
-                                }) {
-                                    Image(imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                        .background(Color(white: 0.95))
-                                        .cornerRadius(8)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .stroke(selectedImageIndex == index ? Color.purple : Color.gray.opacity(0.3), lineWidth: 2)
-                                        )
                                 }
-                            }
                             Spacer()
                         }
                         .padding(.horizontal, 16)
@@ -104,7 +106,7 @@ struct PaymentView: View {
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundColor(.black)
                             
-                            Text("$\(String(format: "%.2f", product.price))")
+                            Text("$\(String(format: "%.2f", product.price ?? "00"))")
                                 .font(.system(size: 22, weight: .bold))
                                 .foregroundColor(Color(red: 0.35, green: 0, blue: 0.7))
                         }
@@ -133,16 +135,17 @@ struct PaymentView: View {
                             
                             if isProductInfoExpanded {
                                 VStack(spacing: 0) {
-                                    ProductInfoRow(title: "Condition", value: product.condition)
-                                    ProductInfoRow(title: "Brand", value: product.brand)
-                                    ProductInfoRow(title: "Model", value: product.model)
-                                    ProductInfoRow(title: "Color", value: product.color)
-                                    ProductInfoRow(title: "Year", value: product.year)
-                                    ProductInfoRow(title: "Size", value: product.size)
-                                    ProductInfoRow(title: "Type", value: product.type)
-                                    
-                                    
-                                    ProductInfoRow(title: "Description", value: product.description, isLast: true, multiline: true)
+                                    ProductInfoRow(title: "Condition", value: product.productDetail.condition)
+                                    ProductInfoRow(title: "Brand", value: product.productDetail.brand)
+                                    ProductInfoRow(title: "Model", value: product.productDetail.model)
+                                    ProductInfoRow(title: "Color", value: product.productDetail.color)
+                                    ProductInfoRow(title: "Year", value: product.productDetail.year)
+                                    ProductInfoRow(title: "Size", value: product.productDetail.size)
+                                    ProductInfoRow(title: "Type", value: product.productDetail.type)
+                                    ProductInfoRow(title: "Description",
+                                                   value: product.productDetail.description,
+                                                   isLast: true,
+                                                   multiline: true)
                                 }
                             }
                         }

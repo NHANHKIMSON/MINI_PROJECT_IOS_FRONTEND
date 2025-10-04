@@ -1,3 +1,5 @@
+import Alamofire
+import Combine
 //
 //  ProductViewModel.swift
 //  Easy Card App
@@ -5,8 +7,6 @@
 //  Created by Apple on 9/28/25.
 //
 import Foundation
-import Alamofire
-import Combine
 
 class ProductViewModel: ObservableObject {
     @Published var products: [Product] = []
@@ -19,15 +19,21 @@ class ProductViewModel: ObservableObject {
                 switch response.result {
                 case .success(let data):
                     do {
-                        let decoded = try JSONDecoder().decode(ProductResponse.self, from: data)
-                        self.products = decoded.payload
+                        let decoded = try JSONDecoder().decode(
+                            ProductResponse.self,
+                            from: data
+                        )
+                        DispatchQueue.main.async {
+                            self.products = decoded.payload
+                        }
                     } catch {
-                        print("Something went wrong")
+                        print("Something went wrong get product")
                     }
                 case .failure(let error):
-                    print("Error \(error)")
+                    print("error:", error.localizedDescription)
+
+                }
             }
-        }
     }
     func getAllProductIsFavorite() {
         let url = "http://localhost:9090/api/v1/product/isFavorite"
@@ -37,45 +43,45 @@ class ProductViewModel: ObservableObject {
                 switch response.result {
                 case .success(let data):
                     do {
-                        let decoded = try JSONDecoder().decode(ProductResponse.self, from: data)
+                        let decoded = try JSONDecoder().decode(
+                            ProductResponse.self,
+                            from: data
+                        )
                         self.products = decoded.payload
                     } catch {
                         print("Something went wrong")
                     }
                 case .failure(let error):
                     print("Error \(error)")
+                }
             }
-        }
     }
-    
-    
-    
-    
+
     func getAllProductByTitle(title: String) {
         let url = "http://localhost:9090/api/v1/product/search?title=\(title)"
         AF.request(url)
             .validate()
-            .responseDecodable(of: ProductResponse.self){ response in
-                switch response.result{
+            .responseDecodable(of: ProductResponse.self) { response in
+                switch response.result {
                 case .success(let data):
                     self.products = data.payload
                 case .failure(let error):
                     print("Error: \(error)")
                 }
-        }
+            }
     }
     func getAllProductByCategoryId(id: Int) {
         let url = "http://localhost:9090/api/v1/product/category/1"
         AF.request(url)
             .validate()
-            .responseDecodable(of: ProductResponse.self){ response in
-                switch response.result{
+            .responseDecodable(of: ProductResponse.self) { response in
+                switch response.result {
                 case .success(let data):
                     self.products = data.payload
                 case .failure(let error):
                     print("Error: \(error)")
                 }
-        }
+            }
     }
     func changeStatus(id: Int, isFavorite: Bool) {
         let url = "http://localhost:9090/api/v1/product/\(id)"
@@ -99,4 +105,3 @@ class ProductViewModel: ObservableObject {
         }
     }
 }
-
