@@ -24,11 +24,11 @@ struct SaveProductView: View {
                     Group{
                         VStack{
                             if signleColumn{
-                                LazyVGrid(columns: columns, spacing: geo.size.height * 0.028){
+                                LazyVGrid(columns: columns, spacing: geo.size.height * 0.0028){
                                     ForEach(productViewModel.products, id: \.id){ pro in
                                         CardVerticle(geo: geo, isFavorite: pro.isFavorite, id: pro.id, name: pro.name, image: pro.image)
                                     }
-                                    .padding(12)
+                                    .padding(.top, 12)
                                 }
                             }else{
                                 LazyVGrid(columns: oneColumn, spacing: geo.size.height * 0.001){
