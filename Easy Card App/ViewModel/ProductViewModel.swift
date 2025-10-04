@@ -99,14 +99,4 @@ class ProductViewModel: ObservableObject {
         }
     }
 }
-//AF.request(url)
-//    .validate()
-//    .responseDecodable(of: CategoryResponse.self) { response in
-//        switch response.result {
-//        case .success(let data):
-//            categories = data.payload
-//        case .failure(let error):
-//            errorMessage = error.localizedDescription
-//        }
-//    }
 

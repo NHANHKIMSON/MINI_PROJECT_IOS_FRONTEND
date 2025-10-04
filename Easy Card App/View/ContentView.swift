@@ -19,7 +19,8 @@ struct ContentView: View {
                 Spacer()
             }
             .toolbar {
-                ToolbarItem(placement: .bottomBar) {                        Button(action: {
+                ToolbarItem(placement: .bottomBar) {
+                    Button(action: {
                         isShow = true
                     }) {
                         Image(systemName: "plus.app.fill")

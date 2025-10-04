@@ -11,7 +11,7 @@ import Combine
 class CategoryViewModel: ObservableObject {
     @Published var categories: [Category] = []
 
-    func getAllCategory() {
+    @MainActor func getAllCategory() {
         let url = "http://localhost:9090/api/v1/category"
         
         AF.request(url)

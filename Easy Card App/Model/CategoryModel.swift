@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Category: Codable {
+struct Category: @nonisolated Codable {
     let id: Int
     let name: String
     let icon: String
 }
 
-struct CategoryResponse: Codable {
+struct CategoryResponse: @nonisolated Codable {
     let payload: [Category]
 }
