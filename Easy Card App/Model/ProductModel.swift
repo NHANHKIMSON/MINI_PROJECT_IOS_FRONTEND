@@ -92,6 +92,7 @@ func postProduct(
     imagesURL: [String],
     isFavorite: Bool,
     categoryId: Int,
+    completed: @escaping (Bool)-> Void
 ) {
     let url = "http://localhost:9090/api/v1/product"
     
@@ -104,8 +105,10 @@ func postProduct(
             switch response.result {
             case .success(let data):
                 print( "success post product")
+                completed(true)
             case .failure(let error):
-                print("Error post product", error.localizedDescription )
+                completed(false)
+                print("Error post product", error.localizedDescription)
         }
     }
 }

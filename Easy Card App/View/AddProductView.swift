@@ -25,6 +25,7 @@ struct AddProductView: View {
     @State var file: File?
 
     @State private var imageURL: [String] = []
+    @State private var isPostSuccess  = false
 
     var body: some View {
         NavigationStack {
@@ -321,9 +322,16 @@ struct AddProductView: View {
                                         imagesURL: imageURL,
                                         isFavorite: false,
                                         categoryId: categoryId
-                                    )
+                                    ){ isSuccess in
+                                        if isSuccess {
+                                            isPostSuccess = true
+                                        }
+                                        
+                                    }
                                     
+                                    categoryId = 0
                                     condition = ""
+                                    price = ""
                                     brand = ""
                                     model = ""
                                     color = ""
@@ -334,7 +342,6 @@ struct AddProductView: View {
                                     title = ""
                                     imageURL.removeAll()
                                     selectedItems.removeAll()
-                                    categoryId = 0
                                 }
                             }
                         }
@@ -352,7 +359,13 @@ struct AddProductView: View {
                             .padding(.horizontal)
                             
                     }
-//                    .disabled(title == "" || price == "" ? true : false)
+                    .disabled(title == "" || price == "" ? true : false)
+                    .alert("Post new product", isPresented: $isPostSuccess){
+                        Button("Okay"){
+                            isPostSuccess = false
+                        }
+                    }
+                   
                 }
             }
             .toolbarBackgroundVisibility(.visible, for: .navigationBar)
